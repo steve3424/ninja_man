@@ -409,39 +409,44 @@
 			link.style.display = "block";
 		}
 
-		function LoadLevel(level_text) {
-			var i = 0;
-			var dimension_string = "";
-			while(level_text[i] != ',') {
-				dimension_string += level_text[i];
-				++i;
-			}
-			global_world_dim = parseInt(dimension_string, 10);
-
-			// move past comma
-			++i;
-
-			global_ninja_row = -1;
-			global_ninja_col = -1;
-			
-			for(var row_i = 0; row_i < global_world_dim; ++row_i) {
-				for(var col_i = 0; col_i < global_world_dim; ++col_i) {
-					global_world_grid[row_i][col_i] = parseInt(level_text[i], 10);
-					if(d[level_text[i]] === "ninja") {
-						global_ninja_row = row_i;
-						global_ninja_col = col_i;
-					}
-
+		function LoadLevel() {
+			var reader = new FileReader();
+			reader.readAsText(this.files[0]);
+			reader.onload = function() {
+				var level_text = reader.result;
+				var i = 0;
+				var dimension_string = "";
+				while(level_text[i] != ',') {
+					dimension_string += level_text[i];
 					++i;
+				}
+				global_world_dim = parseInt(dimension_string, 10);
 
-					if(level_text[i] === ',') {
+				// move past comma
+				++i;
+
+				global_ninja_row = -1;
+				global_ninja_col = -1;
+				
+				for(var row_i = 0; row_i < global_world_dim; ++row_i) {
+					for(var col_i = 0; col_i < global_world_dim; ++col_i) {
+						global_world_grid[row_i][col_i] = parseInt(level_text[i], 10);
+						if(d[level_text[i]] === "ninja") {
+							global_ninja_row = row_i;
+							global_ninja_col = col_i;
+						}
+
 						++i;
+
+						if(level_text[i] === ',') {
+							++i;
+						}
 					}
 				}
-			}
 
-			DrawWorld();
-			SetGridHandlers();
+				DrawWorld();
+				SetGridHandlers();
+			}
 		}
 
 		function main() {
@@ -458,15 +463,9 @@
 			DrawWorld();
 			SetGridHandlers();
 
-			var input = document.querySelector("input[type='file']");
-			input.addEventListener("change", function(e) {
-				var reader = new FileReader();
-				reader.readAsText(input.files[0]);
-				reader.onload = function() {
-					LoadLevel(reader.result);
-				}
-			}, false);
-
+			var input_element = document.querySelector("input[type='file']");
+			input_element.onclick = function() {this.value = null};
+			input_element.onchange = LoadLevel;
 		}
 
 		main();
