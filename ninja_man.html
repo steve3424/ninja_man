@@ -233,7 +233,7 @@
 			// Set up color and cell value we will use.
 			var color;
 			var cell_val;
-			var background_image = null;
+			var background_image = "none";
 			if(right_click) {
 				if(global_ctrl_key_is_down) {
 					color = "black";
@@ -460,7 +460,6 @@
 
 			var input = document.querySelector("input[type='file']");
 			input.addEventListener("change", function(e) {
-				console.log(input.files);
 				var reader = new FileReader();
 				reader.readAsText(input.files[0]);
 				reader.onload = function() {

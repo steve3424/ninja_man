@@ -1,2 +1,1 @@
-- BUG: Background images don't clear to null on reloaded levels
 - BUG: Can't reload level more than once
