@@ -1,2 +1,2 @@
 ## Ninja Man
-Pacman-like game in the browser. You can edit the level and play at the same time. Save and load levels as well.
+Pacman-like level editor. It is not a playable game. Ghosts don't chase or anything. It allows you to edit levels, move ninja man around, save, and load levels.
